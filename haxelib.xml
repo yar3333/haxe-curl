@@ -1,0 +1,14 @@
+<project name="hxCurl" url="https://code.google.com/p/hxcurl/" license="LGPL">
+	<user name="yar3333" />
+	<tag v="neko" />
+	<tag v="php" />
+	<tag v="haxe" />
+	<tag v="curl" />
+    <description>
+        HaXe neko/php binding for the curl library. 
+        This project agregate knarf's "curl" (http://lib.haxe.org/p/curl) 
+        and raza.tiana's "haxe-curl" (http://code.google.com/p/haxe-curl) projects
+        with some refactoring and improvements.
+    </description>
+    <version name="1.0">Init version.</version>
+</project>
