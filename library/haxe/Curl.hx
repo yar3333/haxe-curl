@@ -1,60 +1,51 @@
 package haxe;
 
-class CurlUnsupportedMethodException
-{
-	public function new() {}
-}
-
-class CurlOpt
-{
-	public static inline var URL = "CURLOPT_URL";
-	public static inline var RETURNTRANSFER = "CURLOPT_RETURNTRANSFER";
-	public static inline var POST = "CURLOPT_POST";
-	public static inline var POSTFIELDS = "CURLOPT_POSTFIELDS";
-}
-
 class Curl 
 {
-	#if php
-	var pcurl : String;
-	#elseif neko
-	//var ncurl : neko.Curl;
-	#end
-	
-	public function new() 
+	public static function get(url:String) : String
 	{
-		#if php
-		pcurl = php.Curl.init();
+		if #php
+		
+		var curl = new php.Curl();
+		curl.setopt(php.CurlOpt.URL, serverUrl);
+		curl.setopt(php.CurlOpt.RETURNTRANSFER, true);
+		var response = curl.exec();
+		curl.close();		
+		
 		#elseif neko
-		//ncurl = new neko.Curl();
+		
+		var curl = new neko.Curl(url);
+		curl.action();
+		var response = curl.get_data();
+		
 		#end
+		
+		return response;
 	}
 	
-	public function setopt(opt:Dynamic, val:Dynamic) 
+	public function post(url:String, data:Dynamic) : String
 	{
-		#if php
-		php.Curl.setopt(pcurl, opt, val);
+		if #php
+		
+		var curl = new php.Curl();
+		curl.setopt(php.CurlOpt.URL, serverUrl);
+		curl.setopt(php.CurlOpt.RETURNTRANSFER, true);
+		curl.setopt(php.CurlOpt.POST, true);
+		curl.setopt(php.CurlOpt.POSTFIELDS, data);
+		var response = curl.exec();
+		curl.close();		
+		
 		#elseif neko
-		throw new CurlUnsupportedMethodException();
+		
+		var curl = new neko.Curl(url);
+		
+		// TODO: post data
+		
+		curl.action();
+		var response = curl.get_data();
+		
 		#end
-	}
-	
-	public function exec() : String
-	{
-		#if php
-		return php.Curl.exec(pcurl);
-		#elseif neko
-		throw new CurlUnsupportedMethodException();
-		#end
-		return null;
-	}
-	
-	public function close()
-	{
-		#if php
-		php.Curl.close(pcurl);
-		#elseif neko
-		throw new CurlUnsupportedMethodException();
-		#end
+		
+		return response;
 	}
 }
