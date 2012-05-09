@@ -4,13 +4,13 @@ class Curl
 {
 	public static function get(url:String) : String
 	{
-		if #php
+		#if php
 		
-		var curl = new php.Curl();
-		curl.setopt(php.CurlOpt.URL, serverUrl);
-		curl.setopt(php.CurlOpt.RETURNTRANSFER, true);
-		var response = curl.exec();
-		curl.close();		
+		var curl = php.Curl.init();
+		php.Curl.setopt(curl, php.Curl.CurlOpt.URL, url);
+		php.Curl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
+		var response = php.Curl.exec(curl);
+		php.Curl.close(curl);		
 		
 		#elseif neko
 		
@@ -23,17 +23,17 @@ class Curl
 		return response;
 	}
 	
-	public function post(url:String, data:Dynamic) : String
+	public static function post(url:String, data:Dynamic) : String
 	{
-		if #php
+		#if php
 		
-		var curl = new php.Curl();
-		curl.setopt(php.CurlOpt.URL, serverUrl);
-		curl.setopt(php.CurlOpt.RETURNTRANSFER, true);
-		curl.setopt(php.CurlOpt.POST, true);
-		curl.setopt(php.CurlOpt.POSTFIELDS, data);
-		var response = curl.exec();
-		curl.close();		
+		var curl = php.Curl.init();
+		php.Curl.setopt(curl, php.Curl.CurlOpt.URL, url);
+		php.Curl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
+		php.Curl.setopt(curl, php.Curl.CurlOpt.POST, true);
+		php.Curl.setopt(curl, php.Curl.CurlOpt.POSTFIELDS, data);
+		var response = php.Curl.exec(curl);
+		php.Curl.close(curl);		
 		
 		#elseif neko
 		
