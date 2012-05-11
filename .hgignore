@@ -1,3 +1,6 @@
 syntax: glob
 library.zip
 bin
+hxCurl.opensdf
+hxCurl.sdf
+hxCurl.vcxproj.user
