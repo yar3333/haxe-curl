@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include <curl/curl.h>
-#include <curl/types.h>
-#include <curl/easy.h>
+#include "curl/curl.h"
+#include "curl/types.h"
+#include "curl/easy.h"
 #include <neko.h>
 
 #define STRINGIFY(x) #x
@@ -13,8 +13,8 @@ DEFINE_KIND(k_curl_handle);
 
 struct MemoryStruct
 {
-  char *memory;
-  size_t size;
+	char *memory;
+	size_t size;
 };
 
 static size_t writeMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
