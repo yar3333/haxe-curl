@@ -3,6 +3,6 @@
 system=`uname`
 
 echo "Building hxCurl"
-gcc -c -fPIC library/src/neko/hxcurl.cpp -o library/ndll/$system/hxcurl.o
+gcc -c -fPIC library/src/neko/hxcurl.c -o library/ndll/$system/hxcurl.o
 gcc -lcurl -shared -Wl,-soname,libcurl_wrap.so library/ndll/$system/hxcurl.o -o library/ndll/$system/hxcurl.ndll
 echo "Successfully created Neko FFI module 'hxcurl.ndll'"
