@@ -1,0 +1,8 @@
+#!/bin/bash
+
+system=`uname`
+
+echo "Building hxCurl"
+gcc -c -fPIC library/src/neko/curl_wrap.c -o library/ndll/$system/curlw.o
+gcc -lcurl -shared -Wl,-soname,libcurl_wrap.so library/ndll/$system/curlw.o -o library/ndll/$system/curl_wrap.ndll
+echo "Successfully created Neko FFI module 'curl_wrap.ndll'"
