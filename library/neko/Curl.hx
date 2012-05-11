@@ -1,123 +1,41 @@
-/***
-	hxCurl version 0.1  ---  a binding of libCurl for haXe.
-	Copyright ©2011  Frank M. Eriksson  < http://knarf.se/ >
-
-	This software is free software: you can redistribute it and/or modify
-	it under the terms of the Perl Foundation Artistic License 2.0 and 
-	under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This software is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License and 
-	the Perl Foundation Artistic License in a file named ``COPYING'' along 
-	with this software.  If not, see <http://www.gnu.org/licenses/> and
-	<http://opensource.org/licenses/artistic-license-2.0>.
-***/
-
 package neko;
 
-import neko.Lib;
+class CurlOpt
+{
+	private static inline var TYPE_LONG = 0;
+	private static inline var TYPE_OBJECTPOINT = 10000;
+	
+	public static inline var URL = TYPE_OBJECTPOINT + 2;
+	//public static inline var RETURNTRANSFER = "CURLOPT_RETURNTRANSFER";
+	public static inline var POST = TYPE_LOGN + 47;
+	public static inline var POSTFIELDS = TYPE_OBJECTPOINT + 15;
+}
 
 class Curl 
 {
-	var curl_handle : Dynamic;
-	//	var body_callback		: String -> Void;
-	//	var header_callback		: String -> Void;
-	//	var progress_callback	: String -> Void;
-	var agent(default,set_ua)	: String;
-	var url(default,set_url)	: String;
-	
-	public function new(?url) 
+	public static inline function init() : Dynamic
 	{
-		curl_handle = newCurl();
-		if ( url != null ) 
-		{
-			set_url( url );
-		}
-		setup_callbacks();
+		return hxcurl_init();
 	}
 	
-	public function action()
+	public static inline function close(resource:Dynamic) : Void
 	{
-		return makeRequest(curl_handle);
+		return hxcurl_close(resource);
 	}
 	
-	function set_url(url:String)
+	public static inline function setopt(resource:Dynamic, option:Int, value:Dynamic) : Void
 	{
-		setUrl(curl_handle, Lib.haxeToNeko(url)); 
-		return url;
+		hxcurl_setopt(resource, option, value);
 	}
 	
-	function set_ua(agent:String)
+	public static inline function exec(resource:Dynamic) : String
 	{
-		setUserAgent(curl_handle, Lib.haxeToNeko(agent)); 
-		return agent;
+		return hxcurl_exec(resource);
 	}
 	
-	public function get_data()
-	{
-		return body;
-	}
-	
-	function setup_callbacks() 
-	{
-		setWriteCallbackHandler(curl_handle, header_callback, body_callback, this);
-		head = "";
-		body = "";
-	}
-	
-	var head : String;
-	
-	static function header_callback(self, data)
-	{
-		self.head += Lib.nekoToHaxe(data);
-	}
-	
-	var body : String;
-	
-	static function body_callback(self, data)
-	{
-		self.body += Lib.nekoToHaxe(data);
-	}
-	
-	/**
-		Do a simple fetch of a single file by it's URL, good to use 
-		if your application only fetches a file or two.
-		
-		Do NOT use this if your application fetches more 
-		than a very 'small' amount of files!
-	**/
-	public static function simple_fetch(url) : String
-	{	// creates a new instance and sets it up for one download.
-		var curl = new Curl( url );
-		curl.agent = "test/0.1";
-		curl.action();
-		return curl.get_data();
-	}
-	
-	// Import of functions exposed by the ndll
-	
-	// newCurl() → Abstract kind ( curl_handle )
-	private static var newCurl = neko.Lib.load("curl_wrap","newCurl", 0);
-	
-	// setWriteCallbackHandler( curl_handle, hfunc, bfunc, data ) → Void
-	private static var setWriteCallbackHandler = neko.Lib.load("curl_wrap","setWriteCallbackHandler", 4);
-	
-	// setUrl( curl_handle, url:neko_string ) → Bool
-	private static var setUrl = neko.Lib.load("curl_wrap","setUrl", 2);
-	
-	// makeRequest( curl_handle ) → Bool
-	private static var makeRequest = neko.Lib.load("curl_wrap","makeRequest", 1);
-	
-	// makeRequest( curl_handle ) → Bool
-    private static var setUserAgent = neko.Lib.load("curl_wrap","setUserAgent", 2);
-	
-	// enableCookies( curl_handle, cookie_file:neko_string ) ↓ Void
-    private static var enableCookies = neko.Lib.load("curl_wrap","enableCookies", 2);
+	private static var hxcurl_init = neko.Lib.load("hxcurl","hxcurl_init", 0);
+	private static var hxcurl_close = neko.Lib.load("hxcurl","hxcurl_close", 1);
+	private static var hxcurl_setopt = neko.Lib.load("hxcurl","hxcurl_setopt", 3);
+	private static var hxcurl_exec = neko.Lib.load("hxcurl","hxcurl_exec", 1);
 }
 
