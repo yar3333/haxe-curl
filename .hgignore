@@ -6,3 +6,4 @@ hxCurl.sdf
 hxCurl.vcxproj.user
 hxCurl.suo
 hxCurl.o
+tests/neko/Main.n
