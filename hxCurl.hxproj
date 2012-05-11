@@ -38,6 +38,7 @@
   <hiddenPaths>
     <hidden path="bin" />
     <hidden path="library.zip" />
+    <hidden path="ipch" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
