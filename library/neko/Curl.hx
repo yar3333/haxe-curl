@@ -32,9 +32,9 @@ class Curl
 		return  Lib.nekoToHaxe(hxcurl_exec(resource));
 	}
 	
-	private static var hxcurl_init = Lib.load("hxcurl","hxcurl_init", 0);
-	private static var hxcurl_close = Lib.load("hxcurl","hxcurl_close", 1);
-	private static var hxcurl_setopt = Lib.load("hxcurl","hxcurl_setopt", 3);
-	private static var hxcurl_exec = Lib.load("hxcurl","hxcurl_exec", 1);
+	private static var hxcurl_init = Lib.load("hxCurl","hxcurl_init", 0);
+	private static var hxcurl_close = Lib.load("hxCurl","hxcurl_close", 1);
+	private static var hxcurl_setopt = Lib.load("hxCurl","hxcurl_setopt", 3);
+	private static var hxcurl_exec = Lib.load("hxCurl","hxcurl_exec", 1);
 }
 

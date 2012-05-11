@@ -1,4 +1,6 @@
+export NEKOPATH:=/usr/lib/neko:../../library/ndll/Linux
+
 all:
-    haxe -cp ../../library -cp . -main Main -neko tests/Main.n
-    export NEKOPATH=/usr/lib/neko:../../library/ndll/Linux
-    neko Main.n
+	@echo ${NEKOPATH}
+	haxe -cp ../../library -cp . -main Main -neko Main.n
+	neko Main.n
