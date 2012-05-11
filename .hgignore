@@ -5,4 +5,4 @@ hxCurl.opensdf
 hxCurl.sdf
 hxCurl.vcxproj.user
 hxCurl.suo
-library/ndll/Linux/hxcurl.o
+hxCurl.o
