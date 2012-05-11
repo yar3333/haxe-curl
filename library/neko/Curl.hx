@@ -6,7 +6,6 @@ class CurlOpt
 	private static inline var TYPE_OBJECTPOINT = 10000;
 	
 	public static inline var URL = TYPE_OBJECTPOINT + 2;
-	//public static inline var RETURNTRANSFER = "CURLOPT_RETURNTRANSFER";
 	public static inline var POST = TYPE_LOGN + 47;
 	public static inline var POSTFIELDS = TYPE_OBJECTPOINT + 15;
 }

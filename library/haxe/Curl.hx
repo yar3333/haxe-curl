@@ -1,51 +1,36 @@
 package haxe;
 
+#if php
+typedef NativeCurl = php.Curl;
+#elseif neko
+typedef NativeCurl = neko.Curl;
+#end
+
 class Curl 
 {
 	public static function get(url:String) : String
 	{
+		var curl = NativeCurl.init();
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.URL, url);
 		#if php
-		
-		var curl = php.Curl.init();
-		php.Curl.setopt(curl, php.Curl.CurlOpt.URL, url);
-		php.Curl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
-		var response = php.Curl.exec(curl);
-		php.Curl.close(curl);		
-		
-		#elseif neko
-		
-		var curl = new neko.Curl(url);
-		curl.action();
-		var response = curl.get_data();
-		
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
 		#end
-		
+		var response = NativeCurl.exec(curl);
+		NativeCurl.close(curl);		
 		return response;
 	}
 	
 	public static function post(url:String, data:Dynamic) : String
 	{
+		var curl = NativeCurl.init();
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.URL, url);
 		#if php
-		
-		var curl = php.Curl.init();
-		php.Curl.setopt(curl, php.Curl.CurlOpt.URL, url);
-		php.Curl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
-		php.Curl.setopt(curl, php.Curl.CurlOpt.POST, true);
-		php.Curl.setopt(curl, php.Curl.CurlOpt.POSTFIELDS, data);
-		var response = php.Curl.exec(curl);
-		php.Curl.close(curl);		
-		
-		#elseif neko
-		
-		var curl = new neko.Curl(url);
-		
-		// TODO: post data
-		
-		curl.action();
-		var response = curl.get_data();
-		
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.RETURNTRANSFER, true);
 		#end
-		
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.POST, true);
+		NativeCurl.setopt(curl, php.Curl.CurlOpt.POSTFIELDS, data);
+		var response = NativeCurl.exec(curl);
+		NativeCurl.close(curl);		
 		return response;
 	}
 }
