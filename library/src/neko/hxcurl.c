@@ -41,7 +41,7 @@ static size_t writeMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 void hxcurl_close(value curl_handle)
 {	
 	//val_check_kind(curl_handle, k_curl_handle);
-	curl_easy_cleanup(val_data(curl_handle));
+	//curl_easy_cleanup(val_data(curl_handle));
 }
 DEFINE_PRIM(hxcurl_close, 1);
 
@@ -63,15 +63,15 @@ struct SetOptForm
 void setOptFormField(value v, field f, void *_form)
 {
 	struct SetOptForm *form = (struct SetOptForm*)_form;
-
+	
 	if (val_is_string(v))
 	{
 		char *s = val_string(v);
 		if (*s != '@')
 		{
 			curl_formadd(
-				 &form->formpost, &form->lastptr
-				,CURLFORM_COPYNAME, val_field_name(f)
+				 &(form->formpost), &(form->lastptr)
+				,CURLFORM_COPYNAME, val_string(val_field_name(f))
 				,CURLFORM_COPYCONTENTS, s
 				,CURLFORM_END
 			);
@@ -79,8 +79,8 @@ void setOptFormField(value v, field f, void *_form)
 		else
 		{
 			curl_formadd(
-				 &form->formpost, &form->lastptr
-				,CURLFORM_COPYNAME, val_field_name(f)
+				 &(form->formpost), &(form->lastptr)
+				,CURLFORM_COPYNAME, val_string(val_field_name(f))
 				,CURLFORM_FILE, s + 1
 				,CURLFORM_END
 			);
@@ -103,11 +103,24 @@ value hxcurl_setopt(value curl_handle, value opt, value v)
 		
 		val_iter_fields(v, setOptFormField, &form);
 
-		curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_data(v));
+		curl_easy_setopt(val_data(curl_handle), CURLOPT_HTTPPOST, form.formpost);
 	}
 	else
 	{
-		curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_data(v));
+		if (val_is_string(v))
+		{
+			curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_string(v));
+		}
+		else
+		if (val_is_int(v))
+		{
+			curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_int(v));
+		}
+		else
+		if (val_is_bool(v))
+		{
+			curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_bool(v));
+		}
 	}
 
 	return val_true;
@@ -121,9 +134,8 @@ value hxcurl_exec(value curl_handle)
 	struct MemoryStruct chunk;
 	chunk.memory = (char *)malloc(1);
 	chunk.size = 0;
-	curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, writeMemoryCallback);
-	curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
-	
+	curl_easy_setopt(val_data(curl_handle), CURLOPT_WRITEFUNCTION, writeMemoryCallback);
+	curl_easy_setopt(val_data(curl_handle), CURLOPT_WRITEDATA, (void *)&chunk);
 	curl_easy_perform(val_data(curl_handle));
 
 	chunk.memory = (char *)realloc(chunk.memory, chunk.size + 1);
