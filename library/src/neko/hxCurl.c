@@ -121,6 +121,10 @@ value hxcurl_setopt(value curl_handle, value opt, value v)
 		{
 			curl_easy_setopt(val_data(curl_handle), (CURLoption)val_int(opt), val_bool(v));
 		}
+		else
+		{
+			printf("hxcurl_setopt: TYPE NOT SUPPORTED!\n");
+		}
 	}
 
 	return val_true;
