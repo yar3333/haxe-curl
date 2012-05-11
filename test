@@ -1,8 +1,0 @@
-#!/bin/bash
-
-system=`uname`
-
-echo "Testing hxCurl"
-haxe -cp library -cp tests -main Main -neko tests/main.n
-export NEKOPATH=/usr/lib/neko:./library/ndll/$system
-neko tests/main.n
