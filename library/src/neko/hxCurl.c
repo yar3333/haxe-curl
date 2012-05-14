@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
-#include "curl/curl.h"
-#include "curl/types.h"
-#include "curl/easy.h"
+
+#include <curl/curl.h>
+#include <curl/types.h>
+#include <curl/easy.h>
 #include <neko.h>
 
 #define STRINGIFY(x) #x
@@ -133,9 +134,11 @@ DEFINE_PRIM(hxcurl_setopt, 3);
 
 value hxcurl_exec(value curl_handle)
 {
+	struct MemoryStruct chunk;
+	value r;
+	
 	val_check_kind(curl_handle, k_curl_handle);
 	
-	struct MemoryStruct chunk;
 	chunk.memory = (char *)malloc(1);
 	chunk.size = 0;
 	curl_easy_setopt(val_data(curl_handle), CURLOPT_WRITEFUNCTION, writeMemoryCallback);
@@ -144,7 +147,7 @@ value hxcurl_exec(value curl_handle)
 
 	chunk.memory = (char *)realloc(chunk.memory, chunk.size + 1);
 	chunk.memory[chunk.size] = '\0';
-	value r = alloc_string(chunk.memory);
+	r = alloc_string(chunk.memory);
 	free(chunk.memory);
 	return r;
 }
