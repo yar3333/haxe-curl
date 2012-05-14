@@ -1,7 +1,6 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hxCurl", "hxCurl.vcxproj", "{029CB96F-541F-4B52-AFF2-0D04D4FA53B8}"
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hxCurl", "hxCurl.vcproj", "{5C4158C5-A839-441E-849E-7A9C3B44D20D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +8,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{029CB96F-541F-4B52-AFF2-0D04D4FA53B8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{029CB96F-541F-4B52-AFF2-0D04D4FA53B8}.Debug|Win32.Build.0 = Debug|Win32
-		{029CB96F-541F-4B52-AFF2-0D04D4FA53B8}.Release|Win32.ActiveCfg = Release|Win32
-		{029CB96F-541F-4B52-AFF2-0D04D4FA53B8}.Release|Win32.Build.0 = Release|Win32
+		{5C4158C5-A839-441E-849E-7A9C3B44D20D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5C4158C5-A839-441E-849E-7A9C3B44D20D}.Debug|Win32.Build.0 = Debug|Win32
+		{5C4158C5-A839-441E-849E-7A9C3B44D20D}.Release|Win32.ActiveCfg = Release|Win32
+		{5C4158C5-A839-441E-849E-7A9C3B44D20D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

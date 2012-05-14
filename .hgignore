@@ -7,3 +7,9 @@ hxCurl.vcxproj.user
 hxCurl.suo
 hxCurl.o
 tests/neko/Main.n
+library/src/neko/Release
+library/src/neko/*.ncb
+library/ndll/Windows/*.pdb
+library/src/neko/*.user
+library/ndll/Windows/*.lib
+library/ndll/Windows/*.exp
