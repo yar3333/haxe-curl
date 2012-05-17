@@ -5,9 +5,7 @@
 	<tag v="haxe" />
 	<tag v="curl" />
     <description>
-        HaXe neko/php binding for the curl library. Neko part was majority rewritten.
-        This project based on knarf's "curl" (http://lib.haxe.org/p/curl) 
-        and Raza Tiana's "haxe-curl" (http://code.google.com/p/haxe-curl) projects.
+        HaXe neko/php binding for the curl library. This project based on knarf's "curl" (http://lib.haxe.org/p/curl/) and Raza Tiana's "haxe-curl" (http://code.google.com/p/haxe-curl/) projects.
     </description>
-    <version name="1.0">Init version.</version>
+    <version name="1.1">Major refactoring. Added static get() and post() methods.</version>
 </project>
