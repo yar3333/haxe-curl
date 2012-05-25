@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="CORE_DB_wand_.lib neko.lib"
+				AdditionalDependencies="neko.lib"
 				OutputFile="..\..\ndll\Windows\hxCurl.ndll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="D:\MyProg\_tools\libcurl\lib\Release;D:\MyProg\_tools\motion-twin\neko"
