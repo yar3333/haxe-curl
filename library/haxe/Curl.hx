@@ -10,29 +10,49 @@ typedef CurlOpt = neko.Curl.CurlOpt;
 
 class Curl 
 {
-	public static function get(url:String) : String
+	public static function request(method:String, url:String, ?data:Dynamic, ?headers:Array<String>) : String
 	{
 		var curl = NativeCurl.init();
+		
+		if (data != null && method.toLowerCase() == "get")
+		{
+			url += url.indexOf("?") >= 0 ? "&" : "?" + Lambda.map(Reflect.fields(data), function(fieldName) { 
+				var fieldValue = Reflect.field(data, fieldName);
+				return StringTools.urlEncode(fieldName) + "=" + StringTools.urlEncode(fieldValue);
+			}).join("&");
+		}
+		
 		NativeCurl.setopt(curl, CurlOpt.URL, url);
+		
 		#if php
 		NativeCurl.setopt(curl, CurlOpt.RETURNTRANSFER, true);
 		#end
+		
+		if (data != null && method.toLowerCase() == "post")
+		{
+			NativeCurl.setopt(curl, CurlOpt.POST, true);
+			NativeCurl.setopt(curl, CurlOpt.POSTFIELDS, data);
+		}
+		
+		if (headers != null)
+		{
+			NativeCurl.setopt(curl, CurlOpt.HTTPHEADER, headers);
+		}
+		
 		var response = NativeCurl.exec(curl);
+		
 		NativeCurl.close(curl);		
+		
 		return response;
 	}
 	
-	public static function post(url:String, data:Dynamic) : String
+	public static function get(url:String, ?data:Dynamic, ?headers:Array<String>) : String
 	{
-		var curl = NativeCurl.init();
-		NativeCurl.setopt(curl, CurlOpt.URL, url);
-		#if php
-		NativeCurl.setopt(curl, CurlOpt.RETURNTRANSFER, true);
-		#end
-		NativeCurl.setopt(curl, CurlOpt.POST, true);
-		NativeCurl.setopt(curl, CurlOpt.POSTFIELDS, data);
-		var response = NativeCurl.exec(curl);
-		NativeCurl.close(curl);		
-		return response;
+		return request("get", url, data, headers);
+	}
+	
+	public static function post(url:String, ?data:Dynamic, ?headers:Array<String>) : String
+	{
+		return request("post", url, data, headers);
 	}
 }
