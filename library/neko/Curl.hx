@@ -8,6 +8,8 @@ class CurlOpt
 	public static inline var URL = TYPE_OBJECTPOINT + 2;
 	public static inline var POST = TYPE_LONG + 47;
 	public static inline var POSTFIELDS = TYPE_OBJECTPOINT + 15;
+	public static inline var HEADER = TYPE_LONG + 42;
+	public static inline var HTTPHEADER = TYPE_OBJECTPOINT + 23;
 }
 
 class Curl 

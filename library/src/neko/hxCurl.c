@@ -91,6 +91,10 @@ void setOptFormField(value v, field f, void *_form)
 
 value hxcurl_setopt(value curl_handle, value opt, value v)
 {
+	int i;
+	struct curl_slist *headers = NULL;
+	value *strings;
+	
 	val_check_kind(curl_handle, k_curl_handle);
 	val_match_or_fail(opt, int);
 	
@@ -105,6 +109,24 @@ value hxcurl_setopt(value curl_handle, value opt, value v)
 		val_iter_fields(v, setOptFormField, &form);
 
 		curl_easy_setopt(val_data(curl_handle), CURLOPT_HTTPPOST, form.formpost);
+	}
+	else
+	if (val_int(opt) == CURLOPT_HTTPHEADER)
+	{
+		if (val_is_array(v))
+		{
+			strings	= val_array_ptr(v);
+
+			for (i=0; i<val_array_size(v); i++)
+			{
+				headers = curl_slist_append(headers, val_string(strings[i]));
+			}
+			curl_easy_setopt(val_data(curl_handle), CURLOPT_HTTPHEADER, headers);
+		}
+		else
+		{
+			printf("hxcurl_setopt HTTPHEADER: Array<String> expected.\n");
+		}
 	}
 	else
 	{
