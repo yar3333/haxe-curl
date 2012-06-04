@@ -7,5 +7,5 @@
     <description>
         HaXe neko/php binding for the curl library. This project based on knarf's "curl" (http://lib.haxe.org/p/curl/) and Raza Tiana's "haxe-curl" (http://code.google.com/p/haxe-curl/) projects.
     </description>
-    <version name="1.1">Major refactoring. Added static get() and post() methods.</version>
+    <version name="1.2">Headers support. Now you may send cookies.</version>
 </project>
