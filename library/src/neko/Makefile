@@ -4,7 +4,7 @@ CFLAGS	= -fPIC -I/usr/lib/neko/include
 LDFLAGS = -shared -lneko -lcurl
 
 all: $(OBJS)
-	$(CC) $(LDFLAGS) -o ../../ndll/Linux/hxCurl.ndll hxCurl.o
+	$(CC) $(LDFLAGS) $(CFLAGS) -o ../../ndll/Linux/hxCurl.ndll hxCurl.c
 
 clean:
 	rm -f $(OBJS)
