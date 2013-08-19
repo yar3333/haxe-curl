@@ -38,16 +38,10 @@ static size_t writeMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 	return realsize;
 }
 
-
-void releaseCurl(value curl_handle)
-{
-	curl_easy_cleanup(val_data(curl_handle));
-}
-
 value hxcurl_close(value curl_handle)
 {	
 	val_check_kind(curl_handle, k_curl_handle);
-	releaseCurl(curl_handle);
+	curl_easy_cleanup(val_data(curl_handle));
 	return val_null;
 }
 DEFINE_PRIM(hxcurl_close, 1);
@@ -56,7 +50,6 @@ value hxcurl_init()
 {
 	CURL *curl_handle = curl_easy_init();
 	value ak_curl = alloc_abstract(k_curl_handle, curl_handle);
-	val_gc(ak_curl, releaseCurl);
 	return ak_curl;
 }
 DEFINE_PRIM(hxcurl_init, 0);
