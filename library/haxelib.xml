@@ -7,5 +7,5 @@
     <description>
         HaXe neko/php binding for the curl library. This project based on knarf's "curl" (http://lib.haxe.org/p/curl/) and Raza Tiana's "haxe-curl" (http://code.google.com/p/haxe-curl/) projects.
     </description>
-    <version name="1.2.1">Support close method.</version>
+    <version name="1.2.2">Support close method.</version>
 </project>
