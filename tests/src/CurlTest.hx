@@ -2,7 +2,7 @@ package;
 
 import haxe.Curl;
 
-class TestsA extends haxe.unit.TestCase
+class CurlTest extends haxe.unit.TestCase
 {
     public function testBasic()
     {
