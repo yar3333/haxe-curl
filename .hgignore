@@ -1,8 +1,6 @@
 syntax: glob
-build/*.ncb
-build/*.suo
-build/*.user
+bin
 build/obj
-library.zip
-library/ndll/Windows/*.pdb
-tests/neko/Main.n
+library/library.zip
+library/ndll/Windows/*.exp
+library/ndll/Windows/*.lib
