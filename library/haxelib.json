@@ -1,0 +1,11 @@
+{
+  "name": "hxCurl",
+  "license": "LGPL",
+  "tags": ["neko","php","haxe","curl"],
+  "description": "Curl library bindings for neko/php. This project based on knarf's \"curl\" (http://lib.haxe.org/p/curl/) and Raza Tiana's \"haxe-curl\" (http://code.google.com/p/haxe-curl/) projects.",
+  "contributors": ["yar3333"],
+  "releasenote": "haxe 3 support.",
+  "version": "1.2.3",
+  "url": "https://code.google.com/p/haxe-hxcurl/",
+  "dependencies": {}
+}
