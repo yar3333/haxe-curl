@@ -1,6 +1,6 @@
 syntax: glob
+library/library.zip
 bin
 build/obj
-library/library.zip
 library/ndll/Windows/*.exp
 library/ndll/Windows/*.lib
