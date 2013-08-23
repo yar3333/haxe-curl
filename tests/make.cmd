@@ -1,4 +1,3 @@
-set NEKOPATH=%NEKOPATH%;..\library\ndll\Windows
-
-haxe -cp ../library -cp src -main Main -neko bin/index.n
-neko bin/index.n
+@echo off
+call "c:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat"
+mingw32-make -f Makefile.win %*
