@@ -1,0 +1,38 @@
+####################################################
+# Input:
+#---------------------------------------------------
+# HAXE_COMPILER_OPTIONS - additional options
+####################################################
+
+ifndef NEKOPATH
+    $(error NEKOPATH is undefined.)
+endif
+
+export NEKOPATH:=$(NEKOPATH):../../library/ndll/$(PLATFORM)
+
+neko: assets bin/index.n
+	cd bin && neko index.n 
+
+js: assets bin/index.js
+	cd bin && index.html
+
+php: assets bin/index.php
+	cd bin && php index.php
+
+bin/index.n: | bin
+	haxe $(HAXE_COMPILER_OPTIONS) -cp ../library -cp src -main Main -neko bin/index.n
+
+bin/index.js: | bin
+	haxe $(HAXE_COMPILER_OPTIONS) -cp ../library -cp src -main Main -js bin/index.js
+
+bin/index.php: | bin
+	haxe $(HAXE_COMPILER_OPTIONS) -cp ../library -cp src -main Main -php bin
+
+bin:
+	mkdir -p bin
+
+assets:
+	test -d assets && cp -r assets/* bin
+	
+clean:
+	rm -rf bin/*
