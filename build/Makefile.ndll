@@ -28,6 +28,16 @@ ifeq ($(PLATFORM), Linux64)
 endif
 
 LDFLAGS=-shared
+ifeq ($(PLATFORM), Windows)
+	LDFLAGS+= $(NEKOPATH)\neko.dll
+else
+	ifeq ($(PLATFORM), Windows64)
+		LDFLAGS+= $(NEKOPATH)\neko.dll
+	else
+		LDFLAGS+= lneko
+	endif
+endif
+
 
 build: $(OBJ_FILES)
 	mkdir -p $(dir $(OUT))
