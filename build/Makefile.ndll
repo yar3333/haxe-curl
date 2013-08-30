@@ -23,25 +23,25 @@ OBJ_FILES := $(addprefix $(OBJ_DIR)/,$(notdir $(CPP_FILES:.cpp=.o))) $(addprefix
 OUT=../library/ndll/$(PLATFORM)/$(PROJECT).ndll
 
 CCFLAGS=-shared
-ifeq ($(PLATFORM), Linux64)
-	CCFLAGS+= -fPIC
-endif
-
 LDFLAGS=-shared
-ifeq ($(PLATFORM), Windows)
+
+ifeq ($(PLATFORM), $(filter $(PLATFORM), Windows Windows64))
+	CCFLAGS+= -I$(NEKOPATH)\include
 	LDFLAGS+= $(NEKOPATH)\neko.dll
 else
-	ifeq ($(PLATFORM), Windows64)
-		LDFLAGS+= $(NEKOPATH)\neko.dll
-	else
-		LDFLAGS+= lneko
+	ifeq ($(PLATFORM), Linux64)
+		CCFLAGS+= -fPIC
 	endif
+	LDFLAGS+= -lneko
 endif
-
 
 build: $(OBJ_FILES)
 	mkdir -p $(dir $(OUT))
+ifneq ($(strip $(C_FILES)),)
 	$(CC) $(OBJ_FILES) $(LDFLAGS) -o $(OUT)
+else
+	$(CP) $(OBJ_FILES) $(LDFLAGS) -o $(OUT)
+endif
 
 $(OBJ_FILES): | $(OBJ_DIR)
 
