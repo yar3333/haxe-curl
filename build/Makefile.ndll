@@ -1,0 +1,51 @@
+####################################################
+# Input:
+#---------------------------------------------------
+# PLATFORM - Windows/Windows64/Linux/Linux64/Mac/Mac64
+# PROJECT - project name
+####################################################
+
+ifndef SRC_DIR
+	SRC_DIR=src
+endif
+
+ifndef OBJ_DIR
+	OBJ_DIR=obj
+endif
+
+CC=gcc
+CP=g++
+
+C_FILES := $(wildcard $(SRC_DIR)/*.c)
+CPP_FILES := $(wildcard $(SRC_DIR)/*.cpp)
+OBJ_FILES := $(addprefix $(OBJ_DIR)/,$(notdir $(CPP_FILES:.cpp=.o))) $(addprefix $(OBJ_DIR)/,$(notdir $(C_FILES:.c=.o)))
+
+OUT=../library/ndll/$(PLATFORM)/$(PROJECT).ndll
+
+CCFLAGS=-shared
+ifeq ($(PLATFORM), Linux64)
+	CCFLAGS+= -fPIC
+endif
+
+LDFLAGS=-shared
+
+build: $(OBJ_FILES)
+	mkdir -p $(dir $(OUT))
+	$(CC) $(OBJ_FILES) $(LDFLAGS) -o $(OUT)
+
+$(OBJ_FILES): | $(OBJ_DIR)
+
+$(OBJ_DIR):
+	mkdir -p obj
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CCFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CP) $(CCFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(OBJ_FILES)
+	rm -f $(OUT)
+
+all: clean build
