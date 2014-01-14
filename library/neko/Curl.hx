@@ -10,6 +10,7 @@ class CurlOpt
 	public static inline var POSTFIELDS = TYPE_OBJECTPOINT + 15;
 	public static inline var HEADER = TYPE_LONG + 42;
 	public static inline var HTTPHEADER = TYPE_OBJECTPOINT + 23;
+	public static inline var SSL_VERIFYPEER = 64;
 }
 
 class Curl 
