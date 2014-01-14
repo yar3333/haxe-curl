@@ -11,6 +11,13 @@ class CurlTest extends haxe.unit.TestCase
 		assertTrue(r != null && r != "");
     }
     
+    public function testHttps()
+    {
+		var r = Curl.get("https://google.com");
+		sys.io.File.saveContent("out-google.html", r);
+		assertTrue(r != null && r != "");
+    }
+    
     public function testUpload()
     {
 		var r = Curl.post("http://localhost/upload.php", { file:"@Main.hx" });

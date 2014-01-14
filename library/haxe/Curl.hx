@@ -28,6 +28,10 @@ class Curl
 		NativeCurl.setopt(curl, CurlOpt.RETURNTRANSFER, true);
 		#end
 		
+		#if neko
+		NativeCurl.setopt(curl, CurlOpt.SSL_VERIFYPEER, false);
+		#end
+		
 		if (data != null && method.toLowerCase() == "post")
 		{
 			NativeCurl.setopt(curl, CurlOpt.POST, true);
