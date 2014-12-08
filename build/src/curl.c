@@ -174,14 +174,14 @@ value hxcurl_getinfo(value curl_handle, value opt)
 		{
 			long vlong;
 			curl_easy_getinfo(val_data(curl_handle), option, &vlong);
-			ret = alloc_float(vlong);
+			ret = alloc_int(vlong);
 			break;
 		}
 		case CURLINFO_DOUBLE:
 		{
 			double vdouble;
 			curl_easy_getinfo(val_data(curl_handle), option, &vdouble);
-			ret = alloc_int(vdouble);
+			ret = alloc_float(vdouble);
 			break;
 		}
 		default: {
