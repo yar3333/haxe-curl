@@ -1,5 +1,58 @@
 package neko;
 
+class CurlInfo
+{
+	public static inline var CURLINFO_STRING = 0x100000;
+	public static inline var CURLINFO_LONG   = 0x200000;
+	public static inline var CURLINFO_DOUBLE = 0x300000;
+	public static inline var CURLINFO_SLIST  = 0x400000;
+	
+	public static inline var EFFECTIVE_URL = CURLINFO_STRING + 1;
+	public static inline var RESPONSE_CODE = CURLINFO_LONG   + 2;
+	public static inline var TOTAL_TIME = CURLINFO_DOUBLE + 3;
+	public static inline var NAMELOOKUP_TIME = CURLINFO_DOUBLE + 4;
+	public static inline var CONNECT_TIME = CURLINFO_DOUBLE + 5;
+	public static inline var PRETRANSFER_TIME = CURLINFO_DOUBLE + 6;
+	public static inline var SIZE_UPLOAD = CURLINFO_DOUBLE + 7;
+	public static inline var SIZE_DOWNLOAD = CURLINFO_DOUBLE + 8;
+	public static inline var SPEED_DOWNLOAD = CURLINFO_DOUBLE + 9;
+	public static inline var SPEED_UPLOAD = CURLINFO_DOUBLE + 10;
+	public static inline var HEADER_SIZE = CURLINFO_LONG   + 11;
+	public static inline var REQUEST_SIZE = CURLINFO_LONG   + 12;
+	public static inline var SSL_VERIFYRESULT = CURLINFO_LONG   + 13;
+	public static inline var FILETIME = CURLINFO_LONG   + 14;
+	public static inline var CONTENT_LENGTH_DOWNLOAD = CURLINFO_DOUBLE + 15;
+	public static inline var CONTENT_LENGTH_UPLOAD = CURLINFO_DOUBLE + 16;
+	public static inline var STARTTRANSFER_TIME = CURLINFO_DOUBLE + 17;
+	public static inline var CONTENT_TYPE = CURLINFO_STRING + 18;
+	public static inline var REDIRECT_TIME = CURLINFO_DOUBLE + 19;
+	public static inline var REDIRECT_COUNT = CURLINFO_LONG   + 20;
+	public static inline var PRIVATE = CURLINFO_STRING + 21;
+	public static inline var HTTP_CONNECTCODE = CURLINFO_LONG   + 22;
+	public static inline var HTTPAUTH_AVAIL = CURLINFO_LONG   + 23;
+	public static inline var PROXYAUTH_AVAIL = CURLINFO_LONG   + 24;
+	public static inline var OS_ERRNO = CURLINFO_LONG   + 25;
+	public static inline var NUM_CONNECTS = CURLINFO_LONG   + 26;
+	public static inline var SSL_ENGINES = CURLINFO_SLIST  + 27;
+	public static inline var COOKIELIST = CURLINFO_SLIST  + 28;
+	public static inline var LASTSOCKET = CURLINFO_LONG   + 29;
+	public static inline var FTP_ENTRY_PATH = CURLINFO_STRING + 30;
+	public static inline var REDIRECT_URL = CURLINFO_STRING + 31;
+	public static inline var PRIMARY_IP = CURLINFO_STRING + 32;
+	public static inline var APPCONNECT_TIME = CURLINFO_DOUBLE + 33;
+	public static inline var CERTINFO = CURLINFO_SLIST  + 34;
+	public static inline var CONDITION_UNMET = CURLINFO_LONG   + 35;
+	public static inline var RTSP_SESSION_ID = CURLINFO_STRING + 36;
+	public static inline var RTSP_CLIENT_CSEQ = CURLINFO_LONG   + 37;
+	public static inline var RTSP_SERVER_CSEQ = CURLINFO_LONG   + 38;
+	public static inline var RTSP_CSEQ_RECV = CURLINFO_LONG   + 39;
+	public static inline var PRIMARY_PORT = CURLINFO_LONG   + 40;
+	public static inline var LOCAL_IP = CURLINFO_STRING + 41;
+	public static inline var LOCAL_PORT = CURLINFO_LONG   + 42;
+	public static inline var TLS_SESSION = CURLINFO_SLIST  + 43;
+}
+
+
 class CurlOpt
 {
 	private static inline var TYPE_LONG = 0;
@@ -215,9 +268,15 @@ class Curl
 		return  Lib.nekoToHaxe(hxcurl_exec(resource));
 	}
 	
+	public function getinfo<A>(resource:Dynamic, info:Int) : A
+	{
+		return Lib.haxeToNeko(hxcurl_getinfo(resource, info));
+	}
+	
 	private static var hxcurl_init = Lib.load("curl","hxcurl_init", 0);
 	private static var hxcurl_close = Lib.load("curl","hxcurl_close", 1);
 	private static var hxcurl_setopt = Lib.load("curl","hxcurl_setopt", 3);
 	private static var hxcurl_exec = Lib.load("curl","hxcurl_exec", 1);
+	private static var hxcurl_getinfo = Lib.load("curl", "hxcurl_getinfo", 2);
 }
 
