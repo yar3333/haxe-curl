@@ -152,6 +152,48 @@ value hxcurl_setopt(value curl_handle, value opt, value v)
 }
 DEFINE_PRIM(hxcurl_setopt, 3);
 
+value hxcurl_getinfo(value curl_handle, value opt)
+{
+	int option;
+	value ret;
+
+	val_check_kind(curl_handle, k_curl_handle);
+	val_match_or_fail(opt, int);
+
+	option = val_int(opt);
+	switch (option & CURLINFO_TYPEMASK)
+	{
+		case CURLINFO_STRING:
+		{
+			char * vchar;
+			curl_easy_getinfo(val_data(curl_handle), option, &vchar);
+			ret = alloc_string(vchar);
+			break;
+		}
+		case CURLINFO_LONG:
+		{
+			long vlong;
+			curl_easy_getinfo(val_data(curl_handle), option, &vlong);
+			ret = alloc_int(vlong);
+			break;
+		}
+		case CURLINFO_DOUBLE:
+		{
+			double vdouble;
+			curl_easy_getinfo(val_data(curl_handle), option, &vdouble);
+			ret = alloc_float(vdouble);
+			break;
+		}
+		default: {
+			ret = alloc_string("hxcurl_getinfo: BAD_CURL_INFO");
+			val_throw(ret);
+			break;
+		}
+	}
+	return ret;
+}
+DEFINE_PRIM(hxcurl_getinfo, 2);
+
 value hxcurl_exec(value curl_handle)
 {
 	struct MemoryStruct chunk;
