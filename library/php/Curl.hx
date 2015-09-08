@@ -62,7 +62,7 @@ class CurlOpt
 	public static inline var FTPAPPEND = "CURLOPT_FTPAPPEND";
 	public static inline var FTPASCII = "CURLOPT_FTPASCII";
 	public static inline var FTPLISTONLY = "CURLOPT_FTPLISTONLY";
-	public static inline var HEADER = "CURLOPT_HEADER";  
+	public static inline var HEADER = "CURLOPT_HEADER";
 	public static inline var HTTPGET = "CURLOPT_HTTPGET";
 	public static inline var HTTPPROXYTUNNEL = "CURLOPT_HTTPPROXYTUNNEL";
 	public static inline var MUTE = "CURLOPT_MUTE";
@@ -148,79 +148,90 @@ class CurlOpt
 	public static inline var WRITEFUNCTION = "CURLOPT_WRITEFUNCTION";
 }
 
-class Curl 
-{ 		
-	public static inline function init(url:String = null):String
-	{		
+class Curl
+{
+	public static inline function init(?url:String) : String
+	{
 		return untyped __call__("curl_init", url);
 	}
-	public static inline function errno(resource:String):Int
+	
+	public static inline function errno(resource:String) : Int
 	{
 		return untyped __call__("curl_errno", resource);
 	}
 	
-	public static inline function copy_handle(resource:String):String
+	public static inline function copy_handle(resource:String) : String
 	{
 		return untyped __call__("curl_copy_handle", resource);
 	}
+	
 	public static inline function close(resource:String)
 	{
 		return untyped __call__("curl_close", resource);
-	}	 
+	}
 	
-	public static inline function exec(resource:String):String
-	{ 
-		var val = untyped __call__("curl_exec", resource); 
+	public static inline function exec(resource:String) : String
+	{
+		var val = untyped __call__("curl_exec", resource);
 		return ((!val)?null:(cast val));
 	}
-		
-	public static inline function setopt(resource:String, option:String, value:Dynamic):Bool
+	
+	public static inline function setopt(resource:String, option:String, value:Dynamic) : Bool
 	{
 		if (Std.is(value, Array)) value = Lib.toPhpArray(value);
 		return untyped __call__("curl_setopt", resource, untyped __php__(option), value);
 	}
 	
-	public static inline function getinfo(resource:String):Dynamic
+	public static inline function getinfo(resource:String) : Dynamic
 	{
 		return untyped __call__("curl_getinfo", resource);
 	}
 	
-	public static inline function error(resource:String):String
+	public static inline function error(resource:String) : String
 	{
 		return untyped __call__("curl_error", resource);
 	}
+	
 	public static inline function multi_add_handle(resourceA:String, resourceB:String)
 	{
 		return untyped __call__("curl_multi_add_handle", resourceA, resourceB);
-	}	
+	}
+	
 	public static inline function multi_close(resource:String)
-	{	
+	{
 		return untyped __call__("curl_multi_close", resource);
 	}
-	public static inline function multi_exec(resource:String, still_running:Int=null)
+	
+	public static inline function multi_exec(resource:String, ?still_running:Int)
 	{
 		return untyped __call__("curl_multi_exec", resource, still_running);
 	}
+	
 	public static inline function multi_getcontent(resource:String)
 	{
 		return untyped __call__("curl_multi_getcontent", resource);
 	}
-	public static inline function multi_info_read(resource:String, msgs_in_queue:Int = null)
+	
+	public static inline function multi_info_read(resource:String, ?msgs_in_queue:Int)
 	{
 		return untyped __call__("curl_multi_info_read", resource, msgs_in_queue);
 	}
+	
 	public static inline function multi_init()
 	{
 		return untyped __call__("curl_multi_init");
 	}
+	
 	public static inline function multi_remove_handle(resourceA:String, resourceB:String)
 	{
 		return untyped __call__("curl_multi_init", resourceA, resourceB);
 	}
-	public static inline function multi_select(resource:String, timeout:Float = 1.0)
+	
+	public static inline function multi_select(resource:String, timeout=1.0)
 	{
 		return untyped __call__("curl_multi_select", resource, timeout);
 	}
+
 	public static inline function multi_setopt_array(resource:String, array:Dynamic)
 	{
 		return untyped __call__("curl_multi_setopt_array", resource, array);
