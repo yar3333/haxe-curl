@@ -176,14 +176,7 @@ class Curl
 		
 	public static inline function setopt(resource:String, option:String, value:Dynamic):Bool
 	{
-		switch (Type.typeof(value)) {
-			case TClass(c): {
-				if (c==Array) {
-					value = Lib.toPhpArray(value);
-				}
-			}
-			default:
-		}
+		if (Std.is(value, Array)) value = Lib.toPhpArray(value);
 		return untyped __call__("curl_setopt", resource, untyped __php__(option), value);
 	}
 	
